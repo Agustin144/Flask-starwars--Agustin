@@ -286,7 +286,7 @@ def get_specie(species_id):
     return jsonify(response_body), 200
 
     #ENPOINT PARA FAVORITOS 
-@app.route('/favoritos', methods=['GET'])
+@app.route('/user/favoritos', methods=['GET'])
 def get_favoritos():
     
     favoritos_query = Favoritos.query.all()
@@ -308,24 +308,107 @@ def get_favoritos():
     return jsonify(response_body), 200
 
     #ENDPOINT PARA FAVORITO
-@app.route('/favoritos/<int:favoritos_id>', methods=['GET'])
-def get_favorito(favoritos_id):
+@app.route('/user/<int:id>/favoritos', methods=['GET'])
+def get_favorito(id):
 
-    print(favoritos_id)
 
-    favoritos_query= Favoritos.query.filter_by(id = favoritos_id).first()
-    
+    favoritos_query= Favoritos.query.filter_by(usuario_id = id)
+    response = list(map(lambda user : user.serialize(), favoritos_query))
 
-    if favoritos_query is None:
+    if response == []:
        return jsonify({"msg": "no existe el favorito"}), 404
     
 
     response_body = {
         "msg": "Hello, este es el favorito ",
-        "results" : favoritos_query.serialize()
+        "results" : response
     }
 
     return jsonify(response_body), 200
+
+    ## AGREGAR PLANETA A FAVORITO
+@app.route('/favoritos/planets/<int:planets1_id>', methods=['POST'])
+def create_favorito_planetas(planets1_id):
+
+    request_body = request.json
+    print (request_body)
+    new_planet = Favoritos(usuario_id= request_body["usuario_id"], planets_id= planets1_id)
+    db.session.add(new_planet)
+    db.session.commit()
+
+    request_body={
+        "msg": "Planeta agregado a favorito"
+    }
+    return jsonify(request_body), 200
+
+    ##AGREGAR PEOPLE A FAVORITO
+@app.route('/favoritos/people/<int:people1_id>', methods=['POST'])
+def create_favorito_people(people1_id):
+
+    request_body = request.json
+    print (request_body)
+    new_people = Favoritos(usuario_id= request_body["usuario_id"], people_id= people1_id)
+    db.session.add(new_people)
+    db.session.commit()
+
+    request_body={
+        "msg": "People agregado a favorito"
+    }
+    return jsonify(request_body), 200
+
+    ## AGREGAR STARSHIP A FAVORITOS
+@app.route('/favoritos/starship/<int:starship1_id>', methods=['POST'])
+def create_favorito_starship(starship1_id):
+
+    request_body = request.json
+    print (request_body)
+    new_starship = Favoritos(usuario_id= request_body["usuario_id"], starship_id= starship1_id)
+    db.session.add(new_starship)
+    db.session.commit()
+
+    request_body={
+        "msg": "Starship agregado a favorito"
+    }
+    return jsonify(request_body), 200
+
+    #AGREGAR VEHICLE A FAVORITO
+@app.route('/favoritos/vehicle/<int:vehicle1_id>', methods=['POST'])
+def create_favorito_vehicle(vehicle1_id):
+
+    request_body = request.json
+    print (request_body)
+    new_vehicle = Favoritos(usuario_id= request_body["usuario_id"], vehicle_id= vehicle1_id)
+    db.session.add(new_vehicle)
+    db.session.commit()
+
+    request_body={
+        "msg": "Vehicle agregado a favorito"
+    }
+    return jsonify(request_body), 200
+
+    ##AGREAGR SPECIE A FAVORITO
+@app.route('/favoritos/species/<int:specie1_id>', methods=['POST'])
+def create_favorito_specie(specie1_id):
+
+    request_body = request.json
+    print (request_body)
+    new_specie = Favoritos(usuario_id= request_body["usuario_id"], species_id= specie1_id)
+    db.session.add(new_specie)
+    db.session.commit()
+
+    request_body={
+        "msg": "Specie agregado a favorito"
+    }
+    return jsonify(request_body), 200
+
+
+    
+    
+
+
+    
+
+
 
 
 
