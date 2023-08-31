@@ -331,7 +331,23 @@ def get_favorito(id):
 def create_favorito_planetas(planets1_id):
 
     request_body = request.json
-    print (request_body)
+    #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+
+        #validamos que exista el planeta
+    planet_query = Planets.query.filter_by(id = planets1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if planet_query is None:
+        return jsonify({"msg": "El planeta no existe"}), 404
+
+         #validamos que el planeta ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(planets_id = planets1_id ).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+    
+    if fav_query: #compara el id del planeta del item con el valor pasado por URL
+            return jsonify({"msg": "El planeta ya está agregado a favoritos, no se volverá a agregar"}), 404
+        
+    #Si no se cumplen las condiciones anteriores, se agrega el planeta a favoritos
     new_planet = Favoritos(usuario_id= request_body["usuario_id"], planets_id= planets1_id)
     db.session.add(new_planet)
     db.session.commit()
@@ -346,7 +362,23 @@ def create_favorito_planetas(planets1_id):
 def create_favorito_people(people1_id):
 
     request_body = request.json
-    print (request_body)
+     #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+    
+     #validamos que exista el peolpe
+    people_query = People.query.filter_by(id = people1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if people_query is None:
+        return jsonify({"msg": "El people no existe"}), 404
+    
+     #validamos que el people ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(people_id = people1_id).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+   
+    if fav_query: #compara el id del people del item con el valor pasado por URL
+            return jsonify({"msg": "El people ya está agregado a favoritos, no se volverá a agregar"}), 404
+
+    
     new_people = Favoritos(usuario_id= request_body["usuario_id"], people_id= people1_id)
     db.session.add(new_people)
     db.session.commit()
@@ -361,7 +393,23 @@ def create_favorito_people(people1_id):
 def create_favorito_starship(starship1_id):
 
     request_body = request.json
-    print (request_body)
+   #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+    
+    #validamos que exista el starship
+    starship_query = Starship.query.filter_by(id = starship1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if starship_query is None:
+        return jsonify({"msg": "El starship no existe"}), 404
+
+        #validamos que el starship ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(starship_id = starship1_id).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+   
+    if fav_query: #compara el id del people del item con el valor pasado por URL
+            return jsonify({"msg": "El starship ya está agregado a favoritos, no se volverá a agregar"}), 404
+
+
     new_starship = Favoritos(usuario_id= request_body["usuario_id"], starship_id= starship1_id)
     db.session.add(new_starship)
     db.session.commit()
@@ -376,7 +424,23 @@ def create_favorito_starship(starship1_id):
 def create_favorito_vehicle(vehicle1_id):
 
     request_body = request.json
-    print (request_body)
+     #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+
+        #validamos que exista el vehicle
+    vehicle_query = Starship.query.filter_by(id = vehicle1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if vehicle_query is None:
+        return jsonify({"msg": "El vehicle no existe"}), 404
+
+         #validamos que el starship ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(vehicle_id = vehicle1_id).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+   
+    if fav_query: #compara el id del people del item con el valor pasado por URL
+            return jsonify({"msg": "El vehicle ya está agregado a favoritos, no se volverá a agregar"}), 404
+
+
     new_vehicle = Favoritos(usuario_id= request_body["usuario_id"], vehicle_id= vehicle1_id)
     db.session.add(new_vehicle)
     db.session.commit()
@@ -391,7 +455,23 @@ def create_favorito_vehicle(vehicle1_id):
 def create_favorito_specie(specie1_id):
 
     request_body = request.json
-    print (request_body)
+    #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+    
+    #validamos que exista el specie
+    specie_query = Species.query.filter_by(id = specie1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if specie_query is None:
+        return jsonify({"msg": "El specie no existe"}), 404
+    
+    #validamos que el specie ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(species_id = specie1_id).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+   
+    if fav_query: #compara el id del people del item con el valor pasado por URL
+            return jsonify({"msg": "El specie ya está agregado a favoritos, no se volverá a agregar"}), 404
+
+    
     new_specie = Favoritos(usuario_id= request_body["usuario_id"], species_id= specie1_id)
     db.session.add(new_specie)
     db.session.commit()
@@ -402,15 +482,140 @@ def create_favorito_specie(specie1_id):
     return jsonify(request_body), 200
 
 
+    ##BORRAR PLANETAS DE FAVORITO
+@app.route('/favoritos/planets/<int:planets1_id>', methods=['DELETE'])
+def borrar_favorito_planetas(planets1_id):
+
+    request_body = request.json
+    #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+
+        #validamos que exista el planeta
+    planet_query = Planets.query.filter_by(id = planets1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if planet_query is None:
+        return jsonify({"msg": "El planeta no existe"}), 404
+
+         #validamos que el planeta ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(planets_id = planets1_id ).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
     
+        
+    #Si no se cumplen las condiciones anteriores, se elimina el planeta a favoritos
     
+    db.session.delete(fav_query)
+    db.session.commit()
+
+    request_body={
+        "msg": "Planeta eliminado de favorito"
+    }
+    return jsonify(request_body), 200
 
 
+##BORRAR PEOPLE DE FAVORITO
+@app.route('/favoritos/people/<int:people1_id>', methods=['DELETE'])
+def eliminar_favorito_people(people1_id):
+
+    request_body = request.json
+     #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
     
+     #validamos que exista el peolpe
+    people_query = People.query.filter_by(id = people1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if people_query is None:
+        return jsonify({"msg": "El people no existe"}), 404
+    
+     #validamos que el people ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(people_id = people1_id).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+    
+    db.session.delete(fav_query)
+    db.session.commit()
+
+    request_body={
+        "msg": "People eliminado de favorito"
+    }
+    return jsonify(request_body), 200
+
+##BORRAR STARSHIP DE FAVORITOS
+@app.route('/favoritos/starship/<int:starship1_id>', methods=['DELETE'])
+def eliminar_favorito_starship(starship1_id):
+
+    request_body = request.json
+   #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+    
+    #validamos que exista el starship
+    starship_query = Starship.query.filter_by(id = starship1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if starship_query is None:
+        return jsonify({"msg": "El starship no existe"}), 404
+
+        #validamos que el starship ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(starship_id = starship1_id).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+    
+    db.session.delete(fav_query)
+    db.session.commit()
+
+    request_body={
+        "msg": "Starship eliminado de favorito"
+    }
+    return jsonify(request_body), 200
+
+    ##BORRAR VEHICLE DE FAVORITO
+@app.route('/favoritos/vehicle/<int:vehicle1_id>', methods=['DELETE'])
+def eliminar_favorito_vehicle(vehicle1_id):
+
+    request_body = request.json
+     #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+
+        #validamos que exista el vehicle
+    vehicle_query = Starship.query.filter_by(id = vehicle1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if vehicle_query is None:
+        return jsonify({"msg": "El vehicle no existe"}), 404
+
+         #validamos que el starship ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(vehicle_id = vehicle1_id).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+    
+    db.session.delete(fav_query)
+    db.session.commit()
+
+    request_body={
+        "msg": "Vehicle eliminado de favorito"
+    }
+    return jsonify(request_body), 200
 
 
+    ##BORRAR SPECIE DE FAVORITO
+@app.route('/favoritos/species/<int:specie1_id>', methods=['DELETE'])
+def eliminar_favorito_specie(specie1_id):
 
+    request_body = request.json
+    #validamos que exista el usuario
+    user_query = User.query.filter_by(id = request_body["usuario_id"]).first() #id = propiedad de la tabla user (items de la izq del =)
+    if user_query is None:
+        return jsonify({"msg": "El usuario no está registrado"}), 404
+    
+    #validamos que exista el specie
+    specie_query = Species.query.filter_by(id = specie1_id).first() #id es la propiedad de la tabla Planets y planeta_id es el valor que se pasa por URL
+    if specie_query is None:
+        return jsonify({"msg": "El specie no existe"}), 404
+    
+    #validamos que el specie ya existía como fav
+    fav_query = Favoritos.query.filter_by(usuario_id = request_body["usuario_id"]).filter_by(species_id = specie1_id).first() #devuelve los valores que coinciden (del user_id la tabla Fav) con el body del postman
+   
+    db.session.delete(fav_query)
+    db.session.commit()
 
+    request_body={
+        "msg": "Specie eliminado de favorito"
+    }
+    return jsonify(request_body), 200
 
 
 # this only runs if `$ python src/app.py` is executed
